@@ -1,4 +1,4 @@
-# Library-Python-POO
+# Library Python POO
 
 ## Getting Started
 
