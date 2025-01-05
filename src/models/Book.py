@@ -33,15 +33,9 @@ class Book:
     def stock(self) -> bool:
         return bool(self.units)
     
-    def __str__(self) -> str:
-        print(f"----- Book {self.name} -----")
-        return (
-            f"Book Name: {self.name}\n"
-            f"Book Description: {self.description}\n"
-            f"Book Author: {self.author}\n"
-            f"Book Units: {self.units}\n"
-            f"Book Banner: {self.banner_url}\n\n"
-        )
+    @banner_url.setter
+    def banner_url(self, value: str) -> None:
+        self.__banner_url = value
 
     def decrease_unit(self) -> None:
         if not self.stock: return
@@ -57,8 +51,15 @@ class Book:
     def increase_unit(self) -> None:
         self.__units += 1
 
-    def edit_banner(self, banner_url: str) -> None:
-        self.__banner_url = banner_url
+    def __str__(self) -> str:
+        return (
+            f"----- Book {self.name} -----\n"
+            f"Book Name: {self.name}\n"
+            f"Book Description: {self.description}\n"
+            f"Book Author: {self.author}\n"
+            f"Book Units: {self.units}\n"
+            f"Book Banner: {self.banner_url}\n\n"
+        )
 
 def main() -> None:
     book = Book(name="Drácula", description="Es una novela de fantasía gótica escrita por Bram Stoker, publicada en 1897.", author="Bram Stoker", units=20)

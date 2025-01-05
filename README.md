@@ -3,8 +3,12 @@
 ## Getting Started
 
 1. Clone the repository
-2. Enter the folder of our cloned project
-3. Use python ./Library.py, everything in main of Library.py will be executed.
+2. Join to the correct path of the clone
+3. Execute: `python -m venv venv`
+4. Execute in Windows: `venv\Scripts\activate`
+5. Execute: `pip install -r requirements.txt`
+6. Execute: `pip install -r requirements.test.txt`
+7. Use `python -m src.models.TaskManager` -> everything in main of TaskManager.py will be executed.
 
 ## Description
 
@@ -16,6 +20,26 @@ IMPORTANT: This project was created for practice POO
 
 1. Python
 
+## Libraries used
+
+#### Requirements.txt
+
+```
+No 3rd libraries used.
+```
+
+#### Requirements.test.txt
+
+```
+pytest
+```
+
 ## Portfolio Link
 
 [`https://www.diegolibonati.com.ar/#/project/Library-Python-POO`](https://www.diegolibonati.com.ar/#/project/Library-Python-POO)
+
+## Testing
+
+1. Join to the correct path of the clone
+2. Execute in Windows: `venv\Scripts\activate`
+3. Execute: `pytest --log-cli-level=INFO`

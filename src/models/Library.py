@@ -1,13 +1,13 @@
 from typing import Union
 
-from Book import Book
-from User import UserNormal
-from User import UserPremium 
-from exceptions import BookNotFound
-from exceptions import BookNotValidError
-from exceptions import UserNotFound
-from exceptions import UserNotValidError
-from exceptions import UserAlreadyExists
+from src.models.Book import Book
+from src.models.UserNormal import UserNormal
+from src.models.UserPremium import UserPremium 
+from src.utils.exceptions import BookNotFound
+from src.utils.exceptions import BookNotValidError
+from src.utils.exceptions import UserNotFound
+from src.utils.exceptions import UserNotValidError
+from src.utils.exceptions import UserAlreadyExists
 
 class Library:
     def __init__(self, name: str) -> None:
@@ -39,7 +39,7 @@ class Library:
         self.__users.remove(user)
 
     def remove_user_by_id(self, id_user: str) -> None:
-        user = self.__get_user_by_id(id_user=id_user)
+        user = self._get_user_by_id(id_user=id_user)
         self.__users.remove(user)
 
     def add_book(self, book: Book) -> None:
@@ -52,24 +52,39 @@ class Library:
         self.__books.remove(book)
 
     def remove_book_by_name_and_author(self, name: str, author: str) -> None:
-        book = self.__get_book_by_name_and_author(name=name, author=author)
+        book = self._get_book_by_name_and_author(name=name, author=author)
         self.__books.remove(book)
 
     def rent_book(self, user: UserNormal | UserPremium, book: Book) -> None:
         if not user or not isinstance(user, UserNormal | UserPremium): raise UserNotValidError("You must enter a valid user.")
+        if not book or not isinstance(book, Book): raise BookNotValidError("You must enter a valid book to add.")
+
         user.rent_book(book=book)
 
     def return_book(self, user: UserNormal | UserPremium, book: Book = None) -> None:
         if not user or not isinstance(user, UserNormal | UserPremium): raise UserNotValidError("You must enter a valid user.")
-
-        if isinstance(user, UserPremium) and (not book or not isinstance(book, Book)): raise BookNotValidError("You must enter a valid book to return.")
+        if book and not isinstance(book, Book): raise BookNotValidError("You must enter a valid book to add.")
 
         if isinstance(user, UserPremium):
             user.return_book(book=book)
             return
         
         user.return_book()
-
+    
+    def _get_user_by_id(self, id_user: str) -> UserNormal | UserPremium:
+        for user in self.users:
+            if user.id == id_user:
+                return user
+        
+        raise UserNotFound("A user with the given id was not found.")
+    
+    def _get_book_by_name_and_author(self, name: str, author: str) -> Book:
+        for book in self.books:
+            if book.name == name and book.author == author:
+                return book
+        
+        raise BookNotFound("A book with the given name and author was not found.")
+        
     def str_users(self) -> None:
         print(f"----- Library Users {self.name} -----")
         for user in self.users:
@@ -81,27 +96,12 @@ class Library:
             print(book)
 
     def __str__(self) -> str:
-        print(f"----- Library {self.name} -----")
         return (
+            f"----- Library {self.name} -----\n"
             f"Library Name: {self.name}\n"
             f"Library Users: {self.users}\n"
             f"Library Banner: {self.books}\n\n"
         )
-    
-    def __get_user_by_id(self, id_user: str) -> UserNormal | UserPremium:
-        for user in self.users:
-            if user.id == id_user:
-                return user
-        
-        raise UserNotFound("A user with the given id was not found.")
-    
-    def __get_book_by_name_and_author(self, name: str, author: str) -> Book:
-        for book in self.books:
-            if book.name == name and book.author == author:
-                return book
-        
-        raise BookNotFound("A book with the given name and author was not found.")
-        
 
 def main() -> None:
     # Library
