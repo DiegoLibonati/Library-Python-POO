@@ -8,7 +8,7 @@
 4. Execute in Windows: `venv\Scripts\activate`
 5. Execute: `pip install -r requirements.txt`
 6. Execute: `pip install -r requirements.test.txt`
-7. Use `python -m src.models.TaskManager` -> everything in main of TaskManager.py will be executed.
+7. Use `python -m src.models.Library` -> everything in main of Library.py will be executed.
 
 ## Description
 
