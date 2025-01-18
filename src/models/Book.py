@@ -1,13 +1,20 @@
+from uuid import uuid4
+
 class Book:
     def __init__(
         self, name: str, description: str,
         author: str, units: int, banner_url: str = ""
     ) -> None:
+        self.__id = str(uuid4())
         self.__name = name
         self.__description = description
         self.__author = author
         self.__units = units
         self.__banner_url = banner_url
+
+    @property
+    def id(self) -> str:
+        return self.__id
 
     @property
     def name(self) -> str:
@@ -53,7 +60,8 @@ class Book:
 
     def __str__(self) -> str:
         return (
-            f"----- Book {self.name} -----\n"
+            f"----- Book {self.id} -----\n"
+            f"Book ID: {self.id}\n"
             f"Book Name: {self.name}\n"
             f"Book Description: {self.description}\n"
             f"Book Author: {self.author}\n"

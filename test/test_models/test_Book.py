@@ -7,6 +7,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 
 def test_create_book(book: Book, book_dict: dict[str, str | int]) -> None:
+    assert book.id
     assert book.name == book_dict["name"]
     assert book.description == book_dict["description"]
     assert book.author == book_dict["author"]

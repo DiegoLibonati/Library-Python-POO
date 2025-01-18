@@ -26,8 +26,8 @@ class User(ABC):
         return self.__address
 
     def __str__(self) -> None:
-        print(f"----- User {self.id} -----")
         return (
+            f"----- User {self.id} -----\n"
             f"User ID: {self.id}\n"
             f"User: {self.complete_name}\n"
             f"User Adress: {self.address}\n\n"
