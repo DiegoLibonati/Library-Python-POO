@@ -1,4 +1,5 @@
 from typing import Union
+from typing import ValuesView
 
 from src.models.Book import Book
 from src.models.UserNormal import UserNormal
@@ -20,21 +21,30 @@ class Library:
         return self.__name
 
     @property
-    def books(self) -> list[Book]:
+    def books(self) -> dict[str, Book]:
+        return self.__books
+    
+    @property
+    def users(self) -> dict[str, Union[UserNormal, UserPremium]]:
+        return self.__users
+    
+    @property
+    def books_values(self) -> ValuesView[Book]:
         return self.__books.values()
     
     @property
-    def users(self) -> list[Union[UserNormal, UserPremium]]:
+    def users_values(self) -> ValuesView[Union[UserNormal, UserPremium]]:
         return self.__users.values()
+
 
     def register_user(self, user: UserNormal | UserPremium) -> None:
         if not user or not isinstance(user, UserNormal | UserPremium): raise UserNotValidError("You must enter a valid user.")
-        if user in self.users: raise UserAlreadyExists(f"The user with id {user.id} already exists.")
+        if user in self.users_values: raise UserAlreadyExists(f"The user with id {user.id} already exists.")
         self.__users[user.id] = user
 
     def remove_user(self, user: UserNormal | UserPremium) -> None:
         if not user or not isinstance(user, UserNormal | UserPremium): raise UserNotValidError("You must enter a valid user.")
-        if not user in self.users: raise UserNotFound("This user was not found.")
+        if not user in self.users_values: raise UserNotFound("This user was not found.")
         
         del self.__users[user.id]
 
@@ -44,7 +54,7 @@ class Library:
 
     def remove_book(self, book: Book) -> None:
         if not book or not isinstance(book, Book): raise BookNotValidError("You must enter a valid book to add.")
-        if not book in self.books: raise BookNotFound("This book was not found.")
+        if not book in self.books_values: raise BookNotFound("This book was not found.")
         
         del self.__books[book.id]
 
@@ -66,20 +76,20 @@ class Library:
         
     def str_users(self) -> None:
         print(f"----- Library Users {self.name} -----")
-        for user in self.users:
+        for user in self.users_values:
             print(user)
 
     def str_books(self) -> None:
         print(f"----- Library Books {self.name} -----")
-        for book in self.books:
+        for book in self.books_values:
             print(book)
 
     def __str__(self) -> str:
         return (
             f"----- Library {self.name} -----\n"
             f"Library Name: {self.name}\n"
-            f"Library Users: {self.users}\n"
-            f"Library Banner: {self.books}\n\n"
+            f"Library Users: {self.users_values}\n"
+            f"Library Books: {self.books_values}\n\n"
         )
 
 def main() -> None:
