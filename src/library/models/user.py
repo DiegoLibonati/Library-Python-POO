@@ -1,13 +1,9 @@
-from abc import ABC
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 from uuid import uuid4
 
 
 class User(ABC):
-    def __init__(
-        self, name: str, surname: str,
-        address: str
-    ) -> None:
+    def __init__(self, name: str, surname: str, address: str) -> None:
         self.__id = str(uuid4())
         self.__name = name
         self.__surname = surname
