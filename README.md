@@ -32,7 +32,7 @@ IMPORTANT: This project was created for practice POO
 
 ## Technologies used
 
-1. Python
+1. Python >= 3.11
 
 ## Libraries used
 
